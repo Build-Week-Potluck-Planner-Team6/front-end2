@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
 
+import axiosWithAuth from '../utils/axiosWithAuth';
 import '../CSS/Recipes.css'
 const Recipes = () => {
 
@@ -9,16 +10,16 @@ const Recipes = () => {
     const  url  = useRouteMatch().url;
 
 
-    useEffect(() => {
-        // axiosWithAuth().get('/products')
-        
+    useEffect(() => {  
         const token = localStorage.getItem("token");
 
-        axios.get('https://potluckplanner06.herokuapp.com/api/foods', {
-          headers: {
-            authorization: token
-          }
-        })
+        // axios.get('https://potluckplanner06.herokuapp.com/api/foods', {
+        //   headers: {
+        //     authorization: token
+        //   }
+        // })
+        axiosWithAuth()
+        .get('/foods')
           .then(resp => {
             setItems(resp.data);
           })
@@ -45,9 +46,7 @@ const Recipes = () => {
                 items.map(item=>(
                 <div 
                 className="recipes-card"
-                key={item.id}>
-                        {/* <h1>text</h1> */}
-                    {/* <div className={'recipes-list-img'+ (((item.id+1)*2-1)+(item.id%2*(1)))%2 }> */}
+                key={item.food_id}>
                         <a>
                             <img
                             className='recipes-list-image'

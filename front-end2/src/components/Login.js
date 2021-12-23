@@ -113,7 +113,6 @@ const Login = () =>{
         console.log("Signup", values)
         setErrors(validation(values))
         axios.post('https://potluckplanner06.herokuapp.com/api/auth/login', values)
-        // axios.post('http://localhost:4000/api/login', values)
         .then(resp=>{
             console.log("login : resp = ",resp);
             // const token = localStorage.getItem("token")
