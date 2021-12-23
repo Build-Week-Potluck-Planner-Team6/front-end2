@@ -18,6 +18,7 @@ import Recipes from './components/Recipes';
 import Guest from './components/Guest'
 import Logout from './components/Logout';
 
+import PrivateRoute from './components/PrivateRoute';
 
 const StyledApp = styled.div`
 background-image: url(${Background});
@@ -112,8 +113,8 @@ function App() {
         <Route path="/login" component={Login}/>
         <Route path="/logout" component={Logout}/>
         <Route path="/signup" component={Signup}/>
-        <Route path="/recipes/:id" component={Recipe}/>
-        <Route path="/recipes" component={Recipes}/>
+        <PrivateRoute path="/recipes/:id" component={Recipe}/>
+        <PrivateRoute path="/recipes" component={Recipes}/>
         <Route  path="/guest" > 
           <Guest 
             values={formValues}
