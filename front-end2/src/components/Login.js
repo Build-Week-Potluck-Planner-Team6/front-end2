@@ -3,9 +3,94 @@ import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
-
+import styled from 'styled-components';
 import validation from '../validation/validation';
-import '../CSS/Login.css'
+
+const StyledLogin = styled.div`
+display: flex;
+justify-content: center;
+height: 100vh;
+align-items: center;
+background-color: ivory;
+margin: 5%;
+margin-bottom: 20%;
+border-radius: 20px;
+
+.container {
+    width: 500px;
+    height: 200px;
+background-color: wheat;
+border-radius: 20px;
+}
+h1{
+    font-family: 'cookie', cursive;
+    font-size: 4rem;
+    color: crimson;
+    text-shadow: 1px 1px 2px black, 0 0 25px chocolate, 0 0 5px chocolate;
+}
+
+#register {
+    font-size: 1rem;
+    margin: 2%;
+    padding: 1% 5%;
+    border-radius: 8px;
+    color: rgb(30, 220, 20);
+    background-color: white;
+    border: 2px solid rgb(30, 220, 20);
+}
+#register:disabled {
+    color: grey;
+    background-color: white;
+    border: 2px solid crimson;
+    cursor: not-allowed;
+  }
+#register:hover {
+    background-color: rgb(30, 220, 20);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: wrap column;
+    padding: 2%;
+}
+label{
+    font-family: times;
+    color: saddlebrown;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+input{
+    font-family: 'Croissant One', cursive;
+    margin: 2%;
+    padding: .8%;
+    background-color: navajowhite;
+    color: saddlebrown;
+    text-align: center;
+}
+input[type=input]:focus {
+  font-family: 'Croissant One', cursive;
+  background-color: peru;
+  color: white;
+}
+input[type=password]:focus {
+  font-family: 'Croissant One', cursive;
+  background-color: peru;
+  color: white;
+}
+.error{
+    color: red;
+}
+`
+
+
+
+
+
 
 const initForm = {
     username: '',
@@ -43,12 +128,12 @@ const Login = () =>{
     }
 
     return(
+        <StyledLogin>
         <div className="login-from">
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form className='form container' onSubmit={handleSubmit}>
+                <label>
                     Username:
-                    <br/>
                     <input
                         type="text"
                         name="username"
@@ -56,11 +141,10 @@ const Login = () =>{
                         onChange={handleChange}
                     />
                     {errors.username && <p className='error'>{errors.username}</p>}
-                </div>
+                </label>
 
-                <div>
+                <label>
                     Password:
-                    <br/>
                     <input
                         type="password"
                         name="password"
@@ -68,11 +152,12 @@ const Login = () =>{
                         onChange={handleChange}
                     />
                     {errors.password && <p className='error'>{errors.password}</p>}
-                </div>
+                </label>
 
-            <button>Log in</button>
+            <button id="register">Log in</button>
             </form>
         </div>
+      </StyledLogin>  
 
     );
 }

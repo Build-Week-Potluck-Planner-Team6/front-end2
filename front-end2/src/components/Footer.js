@@ -1,11 +1,12 @@
-
 import React, { useEffect, useState } from "react";
+import styled from 'styled-components';
 
-import './../CSS/Footer.css'
+const StyledFooter = styled.div`
+margin-top: 1%;
+color: white;
+font-family: 'cookie', cursive;
 
-
-// ttamlogotop
-import ttamlogotopJpg from "./../images/ttamlogotop.jpeg"
+`
 
 const Footer = (props) => {
 
@@ -13,17 +14,12 @@ const Footer = (props) => {
 
 
     return (
+        <StyledFooter>
         <div className="footer">
-            {/* <h2>Footer</h2> */}
             <div className="footer-border">
                 <div className="footer-border-radius-left footer-bg">
                 </div>
-                <div className="footer-border-radius-right">
-                    <a><img src={ttamlogotopJpg} alt='ttamlogotop'/></a>
-                    <br/>
-                    <a href="https://www.takethemameal.com" target="_blank">Coordinate meals for friends and family in need with TakeThemAMeal.com</a>
                 
-                </div>
             </div>
             <div className="footer-bar">
                 <a>find a meal</a>
@@ -62,6 +58,7 @@ const Footer = (props) => {
 
             </div>
         </div>
+        </StyledFooter>
     )
 }
 export default Footer;
