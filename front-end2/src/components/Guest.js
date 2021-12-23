@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledGuest = styled.div`
- h1, h3 {
-     color: white
- }
  
+ h1, h3, .errors{
+     color: white;
+ }
 .topGuest {
+    margin: auto;
     width: 60%;
     image-render: cover;
 }
@@ -14,11 +15,19 @@ const StyledGuest = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: auto;
     border: 1px black solid;
     background-color: peru;
     width: 40%;
   }
+
+
+
+#guest-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .form {
     border: 1px black solid;
     display: flex;
@@ -41,40 +50,33 @@ input, select {
   }
 button {
     margin: 20px;
+    padding: 15px;
     font-weight: bold;
+    font-size: 1rem;
+    background-color: peru;
+    border: 2px black solid;
+    color: white;
   }
 
 `;
 
-const initGuestForm = {
-    attending : '',
-    guestName : '',
-    guestEmail : '',
-    guestPhone : '',
-    category: '',
-    bring : '',
-
-}
 
 const Guest = (props) => {
-    const [values, setValues] = useState(initGuestForm)
-    const [errors, setErrors] = useState(initGuestForm)
-    // const { values, submit, change, disabled, errors } = props;
-    const { submit, change, disabled} = props;
-
+    const { values, submit, change, disabled, errors } = props;
+ 
     const onSubmit = evt => {
         evt.preventDefault();
         submit(); 
     }
     const onChange = evt => {
-        // console.log(evt.target.checked, evt.target.type);
+        console.log(evt.target.checked, evt.target.type);
         const { name, value, checked, type } = evt.target;
         const valueToUse = type === 'checkbox' ? checked : value;
         change(name, valueToUse);
     }
 
     return (
-        <StyledGuest className='form'>
+        <StyledGuest onSubmit={onSubmit} className='form'>
             <div className='topGuest'>
                 <h1>You're invited to a potluck!</h1>
                 <h3>Please let us know if you're coming and what you'll be bringing.</h3>
@@ -132,7 +134,7 @@ const Guest = (props) => {
                             name='guestPhone'
                             type='tel'
                             placeholder='Format: 123-456-7890'
-                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                            // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                             maxLength='12'
                         />
                     </label>
@@ -177,7 +179,6 @@ const Guest = (props) => {
                     <div>{errors.category}</div>
                     <div>{errors.bring}</div>
                 </div>
-
             </form> 
         </StyledGuest>
     )
