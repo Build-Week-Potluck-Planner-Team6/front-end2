@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as yup from 'yup';
+import schema from './validation/Schema';
 
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import Background from './images/pexels-pixabay-326279.jpg'
 
@@ -28,8 +29,80 @@ height: 100%;
   padding:2%;
 }
 `
+const initGuest = [];
+const initDisabled = true;
+const initGuestFormValues = {
+  attending: '',
+  guestName: '',
+  guestEmail: '',
+  guestPhone: '',
+  category: '',
+  bring: ''
+}
+const initGuestFormErrors = {
+  attending: '',
+  guestName: '',
+  guestEmail: '',
+  guestPhone: '',
+  category: '',
+  bring: '',
+}
 
 function App() {
+  const [guests, setGuests] = useState(initGuest);
+  const [disabled, setDisabled] = useState(initDisabled);
+  const [formValues, setFormValues] = useState(initGuestFormValues);
+  const [formErrors, setFormErrors] = useState(initGuestFormErrors);
+  
+  const getGuests = () => {
+    axios.get(`https://reqres.in/api/orders`)
+    .then(resp => {
+      console.log(resp)
+      setGuests(resp.data.data);
+    }).catch(err => console.error(err))
+  }
+
+  const postGuest = newGuest => {
+    axios.post(`https://reqres.in/api/orders`, newGuest)
+    .then(resp => {
+        console.log(resp);
+        setGuests([resp.data, ...guests ])
+    }).catch(err => console.error(err))
+    .finally(() => setFormValues(initGuestFormValues))
+}
+  const validate = (name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: ''}))
+      .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
+  }
+  const inputChange = (name, value) => {
+    validate(name, value);
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+  }
+
+  const formSubmit = () => {
+    const newGuest = {
+      attending : formValues.attending,
+      guestName : formValues.guestName.trim(),
+      guestEmail : formValues.guestEmail.trim(),
+      guestPhone : formValues.guestPhone.trim(),
+      category: formValues.category,
+      bring : formValues.bring
+    }
+    postGuest(newGuest);
+  }
+  useEffect(() => {
+    getGuests()
+  }, [])
+
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues])
+
   return (
     <StyledApp>
     <div className="App">
@@ -41,7 +114,15 @@ function App() {
         <Route path="/signup" component={Signup}/>
         <Route path="/recipes/:id" component={Recipe}/>
         <Route path="/recipes" component={Recipes}/>
-        <Route path="/guest" component={Guest}/>
+        <Route  path="/guest" > 
+          <Guest 
+            values={formValues}
+            change={inputChange}
+            submit={formSubmit}
+            disabled={disabled}
+            errors={formErrors}
+            />
+        </Route>
       </Switch>
       <Footer/>
     </div>
