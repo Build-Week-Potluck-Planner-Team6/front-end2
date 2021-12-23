@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
-
 const StyledGuest = styled.div`
-
+ h1, h3 {
+     color: white
+ }
+ 
 .topGuest {
-    background-image: url(front-end2\src\assets\food2.jpg);
-    width: 90%;
+    width: 60%;
     image-render: cover;
 }
 #rsvp {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: 10px;
     border: 1px black solid;
-    background-color: lightgray;
+    background-color: peru;
+    width: 40%;
   }
 .form {
     border: 1px black solid;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
     justify-content: center;
     margin: auto;
-    width: 90%;
+    width: 50%;
   }
   
 label {
@@ -31,6 +33,7 @@ label {
     justify-content: space-between
     margin: 10px;
     padding: 10px;
+    color: white;
   }
   
 input, select {
@@ -74,7 +77,7 @@ const Guest = (props) => {
         <StyledGuest className='form'>
             <div className='topGuest'>
                 <h1>You're invited to a potluck!</h1>
-                <p>Please let us know if you're coming and what you'll be bringing.</p>
+                <h3>Please let us know if you're coming and what you'll be bringing.</h3>
             </div>
             <form id='guest-form' onSubmit={onSubmit}>
                 

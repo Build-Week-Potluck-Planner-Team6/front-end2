@@ -22,7 +22,7 @@ If you have ever tried to organize a potluck through text messages, online to-do
 
 ### *Heroku API*
 
-Deployed URL: [https://deployedPotLuckPlannerAPI.heroku.com](https://deployedPotLu)
+Deployed URL: https://potluckplanner06.herokuapp.com/
 
 
 # *Meet the Team*

@@ -1,5 +1,5 @@
 import { getByDisplayValue } from "@testing-library/react";
-import react from "react";
+import React from "react";
 import TimePicker from "react-time-picker";
 
 //import styled from 'styled-components';
