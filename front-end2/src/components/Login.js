@@ -112,13 +112,13 @@ const Login = () =>{
         e.preventDefault();  
         console.log("Signup", values)
         setErrors(validation(values))
-        // axios.post('https://potluckplanner06.herokuapp.com/api/auth/login', values)
-        axios.post('http://localhost:4000/api/login', values)
+        axios.post('https://potluckplanner06.herokuapp.com/api/auth/login', values)
+        // axios.post('http://localhost:4000/api/login', values)
         .then(resp=>{
             console.log("login : resp = ",resp);
             // const token = localStorage.getItem("token")
-            console.log("login : resp.data = ",resp.data.payload);
-            localStorage.setItem('token', resp.data.payload);
+            console.log("login : resp.data = ",resp.data.token);
+            localStorage.setItem('token', resp.data.token);
             push('/recipes');
         })
         .catch(err=>{
