@@ -27,6 +27,7 @@ button:hover {
 `
 
 const Header = () => {
+    const isLoggedIn = localStorage.getItem('token');
 
     return(
         <StyledHeader>
@@ -41,8 +42,13 @@ const Header = () => {
                     <Link to='/'><button>Home</button></Link>
                     <Link className="link" to='/signup'><button>SignUp</button></Link>
                     <Link className="link" to='/login'><button>Login</button></Link>
-                    <Link className="link" to='/logout'><button>LogOut</button></Link>
-                    <Link className="link" to='/recipes'><button>Recipes</button></Link>
+                    {
+                        isLoggedIn && <Link className="link" to='/logout'><button>LogOut</button></Link>
+                    }
+                    {
+                       isLoggedIn && <Link className="link" to='/recipes'><button>Recipes</button></Link> 
+                    }
+                    
                     <Link className="link" to='/guest'><button>Guest</button></Link>
                 </nav>
                 </div>
