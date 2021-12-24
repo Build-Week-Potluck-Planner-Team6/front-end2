@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as yup from 'yup';
 import schema from './validation/Schema';
+import { connect } from 'react-redux';
 
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
@@ -132,4 +133,11 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log("App.js mapStateToProps", state)
+  return({
+    isLoggedIn: state.isLoggedIn 
+  })
+}
+
+export default connect(mapStateToProps,)(App);
