@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const StyledHeader = styled.div`
 width: 100%;
@@ -26,8 +27,8 @@ button:hover {
 
 `
 
-const Header = () => {
-    const isLoggedIn = localStorage.getItem('token');
+const Header = (props) => {
+    const {isLoggedIn, fetchStart, fetchSuccess} = props
 
     return(
         <StyledHeader>
@@ -58,4 +59,11 @@ const Header = () => {
     )
 }
 
-export default Header;
+const mapStateToProps = state => {
+    console.log("Header.js mapStateToProps", state)
+    return({
+      isLoggedIn: state.isLoggedIn 
+    })
+  }
+
+export default connect(mapStateToProps,)(Header);

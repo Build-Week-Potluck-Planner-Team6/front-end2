@@ -3,6 +3,9 @@ import axios from 'axios'
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import {fetchStart} from '../actions'
+
 const StyledLogout = styled.div`
 display: flex;
 justify-content: center;
@@ -25,9 +28,10 @@ h1{
 
 const Logout = (props) => {
     const {push} = useHistory()
-
+    const {fetchStart} = props
     useEffect(()=> {
         localStorage.removeItem('token')
+        fetchStart()
         push('./login')
     }, []);
 
@@ -39,4 +43,4 @@ const Logout = (props) => {
         </StyledLogout>
     )
 }
-export default Logout;
+export default connect(null,{fetchStart})(Logout);

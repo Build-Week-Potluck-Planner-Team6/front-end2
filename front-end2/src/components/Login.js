@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchSuccess} from '../actions'
 
 import styled from 'styled-components';
 import validation from '../validation/validation';
@@ -96,7 +98,8 @@ const initForm = {
     username: '',
     password: ''
 }
-const Login = () =>{
+const Login = (props) =>{
+    const {fetchSuccess} = props
     const [values, setValues] = useState(initForm)
     const [errors, setErrors] = useState({});
     const { push } = useHistory();
@@ -118,6 +121,7 @@ const Login = () =>{
             // const token = localStorage.getItem("token")
             console.log("login : resp.data = ",resp.data.token);
             localStorage.setItem('token', resp.data.token);
+            fetchSuccess()
             push('/recipes');
         })
         .catch(err=>{
@@ -160,5 +164,4 @@ const Login = () =>{
 
     );
 }
-
-export default Login;
+export default connect(null,{ fetchSuccess})(Login);

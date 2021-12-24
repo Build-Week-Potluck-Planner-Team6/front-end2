@@ -50,7 +50,8 @@ const initGuestFormErrors = {
   bring: '',
 }
 
-function App() {
+function App(props) {
+  const {isLoggedIn, fetchStart, fetchSuccess} = props
 
   const [guests, setGuests] = useState(initGuest);
   const [disabled, setDisabled] = useState(initDisabled);
@@ -60,7 +61,7 @@ function App() {
   const getGuests = () => {
     axios.get(`https://reqres.in/api/orders`)
     .then(resp => {
-      console.log(resp)
+      // console.log(resp)
       setGuests(resp.data.data);
     }).catch(err => console.error(err))
   }
