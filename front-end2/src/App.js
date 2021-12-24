@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as yup from 'yup';
 import schema from './validation/Schema';
+import { connect } from 'react-redux';
 
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
@@ -18,6 +19,7 @@ import Recipes from './components/Recipes';
 import Guest from './components/Guest'
 import Logout from './components/Logout';
 
+import PrivateRoute from './components/PrivateRoute';
 
 const StyledApp = styled.div`
 background-image: url(${Background});
@@ -48,7 +50,9 @@ const initGuestFormErrors = {
   bring: '',
 }
 
-function App() {
+function App(props) {
+  const {isLoggedIn, fetchStart, fetchSuccess} = props
+
   const [guests, setGuests] = useState(initGuest);
   const [disabled, setDisabled] = useState(initDisabled);
   const [formValues, setFormValues] = useState(initGuestFormValues);
@@ -57,7 +61,7 @@ function App() {
   const getGuests = () => {
     axios.get(`https://reqres.in/api/orders`)
     .then(resp => {
-      console.log(resp)
+      // console.log(resp)
       setGuests(resp.data.data);
     }).catch(err => console.error(err))
   }
@@ -112,8 +116,8 @@ function App() {
         <Route path="/login" component={Login}/>
         <Route path="/logout" component={Logout}/>
         <Route path="/signup" component={Signup}/>
-        <Route path="/recipes/:id" component={Recipe}/>
-        <Route path="/recipes" component={Recipes}/>
+        <PrivateRoute path="/recipes/:id" component={Recipe}/>
+        <PrivateRoute path="/recipes" component={Recipes}/>
         <Route  path="/guest" > 
           <Guest 
             values={formValues}
@@ -130,4 +134,11 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log("App.js mapStateToProps", state)
+  return({
+    isLoggedIn: state.isLoggedIn 
+  })
+}
+
+export default connect(mapStateToProps,)(App);

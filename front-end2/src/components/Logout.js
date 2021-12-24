@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import axios from 'axios'
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import {fetchStart} from '../actions'
 
 const StyledLogout = styled.div`
 display: flex;
@@ -23,20 +27,13 @@ h1{
 
 
 const Logout = (props) => {
-
+    const {push} = useHistory()
+    const {fetchStart} = props
     useEffect(()=> {
-        const token = localStorage.getItem("token");
-        axios.post('http://localhost:4000/api/logout', {}, {
-            headers:{
-                authorization: localStorage.getItem('token')
-            }
-        })
-        .then(resp => {
-                localStorage.removeItem('token');
-              
-                props.history.push('/login');
-            });
-    }, [props]);
+        localStorage.removeItem('token')
+        fetchStart()
+        push('./login')
+    }, []);
 
     return (
         <StyledLogout>
@@ -46,4 +43,4 @@ const Logout = (props) => {
         </StyledLogout>
     )
 }
-export default Logout;
+export default connect(null,{fetchStart})(Logout);

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, NavLink} from 'react-router-dom';
 
 import axios from 'axios';
-
+import axiosWithAuth from '../utils/axiosWithAuth';
 import '../CSS/Recipe.css'
 const Recipe = (props) => {
     const [item, setItem] = useState([])
@@ -15,11 +15,13 @@ const Recipe = (props) => {
         
         const token = localStorage.getItem("token");
 
-        axios.get(`https://potluckplanner06.herokuapp.com/api/foods/${id}`, {
-          headers: {
-            authorization: token
-          }
-        })
+        // axios.get(`https://potluckplanner06.herokuapp.com/api/foods/${id}`, {
+        //   headers: {
+        //     authorization: token
+        //   }
+        // })
+        axiosWithAuth()
+        .get(`/foods/${id}`)
           .then(resp => {
             setItem(resp.data);
           })
@@ -61,11 +63,6 @@ const Recipe = (props) => {
      </NavLink>
      
      </nav>
-     {/* <Route
-     exact
-     path="/item-list/:id"
-     // render={props => <ItemDescription {...props} item={item} />}
-     /> */}
      <p className="item-description">{item.food_description}</p>
 
      <button onClick={handleClickEdit} className="md-button">
